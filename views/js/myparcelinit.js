@@ -62,9 +62,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
         $input.trigger('change');
       }
       document.dispatchEvent(new Event('myparcel_render_delivery_options'));
-      if (triggerChange) {
-        initializeMyParcelForm($('.delivery-option input:checked').closest('.delivery-option'));
-      }
     }
 
     // On change
