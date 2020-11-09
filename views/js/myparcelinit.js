@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function (event) {
+  let updateAfterInitialization = false;
     let initializeMyParcelForm = function (carrier) {
         if (!carrier || !carrier.length || !carrier.find('input:checked')) {
             return;
@@ -30,6 +31,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
     let updateMypaInput = function(dataObj) {
         let $deliveryInput = $('.delivery-option input[type="radio"]:checked');
         let $input = $('#mypa-input');
+        console.log('111:'+Math.random());
+        console.log($input.val());
+        console.log(dataObj);
+        console.log('updateMypaInput #myparcel-delivery-options:' + $('#myparcel-delivery-options').length);
         if (!$input.length) {
             $input = $('<input type="hidden" class="mypa-post-nl-data" id="mypa-input" name="myparcel-delivery-options" />');
             let $wrapper = $deliveryInput
@@ -41,16 +46,25 @@ document.addEventListener("DOMContentLoaded", function (event) {
             }
         }
 
-      let dataString = JSON.stringify(dataObj)
+      let dataString = JSON.stringify(dataObj);
+      let triggerChange = false;
+      if (updateAfterInitialization === true) {
+        updateAfterInitialization = false;
+        triggerChange = true;
+        dataString = JSON.stringify(window.MyParcelConfig.delivery_settings);
+      }
 
       $input.val(dataString);
 
       let $checkoutDeliverStep = $('#checkout-delivery-step');
       let isOnDeliverStep = $checkoutDeliverStep.hasClass('js-current-step') || $checkoutDeliverStep.hasClass('-current');
-      if(isOnDeliverStep) {
+      if(isOnDeliverStep || triggerChange) {
         $input.trigger('change');
       }
       document.dispatchEvent(new Event('myparcel_render_delivery_options'));
+      if (triggerChange) {
+        initializeMyParcelForm($('.delivery-option input:checked').closest('.delivery-option'));
+      }
     }
 
     // On change
@@ -66,9 +80,23 @@ document.addEventListener("DOMContentLoaded", function (event) {
   document.addEventListener(
     'myparcel_updated_delivery_options',
     (event) => {
-      if(event.detail) {
+      if (event.detail) {
+        console.log('222:'+Math.random());
+        console.log('myparcel_updated_delivery_options');
+        console.log(event);
+        console.log('#myparcel-delivery-options:' + $('#myparcel-delivery-options').length);
         updateMypaInput(event.detail);
       }
+    }
+  );
+  document.addEventListener(
+    'myparcel_update_delivery_options',
+    (event) => {
+      console.log('333:'+Math.random());
+      updateAfterInitialization = true;
+      console.log('myparcel_update_delivery_options');
+      console.log(event);
+      console.log('#myparcel-delivery-options:' + $('#myparcel-delivery-options').length);
     }
   );
 });
