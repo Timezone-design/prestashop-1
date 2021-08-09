@@ -13,6 +13,12 @@ class Constant
     const MENU_CUSTOMS_SETTINGS = 4;
     const MENU_CARRIER_SETTINGS = 5;
 
+    /**
+     * Maximum characters length of item description.
+     */
+    public const ITEM_DESCRIPTION_MAX_LENGTH  = 50;
+    public const ORDER_DESCRIPTION_MAX_LENGTH = 45;
+
     const API_KEY_CONFIGURATION_NAME = 'MYPARCELBE_API_KEY';
     const API_LOGGING_CONFIGURATION_NAME = 'MYPARCELBE_API_LOGGING';
 

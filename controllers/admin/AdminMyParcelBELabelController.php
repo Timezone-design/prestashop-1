@@ -13,7 +13,6 @@ use Gett\MyparcelBE\Service\Consignment\Download;
 use Gett\MyparcelBE\Service\DeliverySettingsProvider;
 use Gett\MyparcelBE\Service\ErrorMessage;
 use Gett\MyparcelBE\Service\MyparcelStatusProvider;
-use Gett\MyparcelBE\Service\Order\OrderTotalWeight;
 use MyParcelNL\Sdk\src\Exception\InvalidConsignmentException;
 use MyParcelNL\Sdk\src\Factory\ConsignmentFactory as ConsignmentFactorySdk;
 use MyParcelNL\Sdk\src\Helper\MyParcelCollection;
@@ -131,9 +130,6 @@ class AdminMyParcelBELabelController extends ModuleAdminController
                     $consignment->setPackageType($options->package_type);
                 } else {
                     $consignment->setPackageType(1);
-                }
-                if ($consignment->getPackageType() == AbstractConsignment::PACKAGE_TYPE_DIGITAL_STAMP) {
-                    $consignment->setTotalWeight((new OrderTotalWeight())->provide((int) $orderId));
                 }
                 if ($options->only_to_recipient == 1 && $consignment instanceof PostNLConsignment) {
                     $consignment->setOnlyRecipient(true);
