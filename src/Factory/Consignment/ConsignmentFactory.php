@@ -2,17 +2,17 @@
 
 namespace Gett\MyparcelBE\Factory\Consignment;
 
-use Configuration;
-use Country;
+use ConfigurationCore as Configuration;
+use CountryCore as Country;
 use DateTime;
 use Exception;
 use Gett\MyparcelBE\Carrier\PackageTypeCalculator;
 use Gett\MyparcelBE\Constant;
+use Gett\MyparcelBE\Entity\OrderLabel;
 use Gett\MyparcelBE\Module\Carrier\Provider\CarrierSettingsProvider;
-use Gett\MyparcelBE\OrderLabel;
 use Gett\MyparcelBE\Service\Order\OrderTotalWeight;
 use Gett\MyparcelBE\Service\ProductConfigurationProvider;
-use Module;
+use ModuleCore as Module;
 use MyParcelNL\Sdk\src\Helper\MyParcelCollection;
 use MyParcelNL\Sdk\src\Model\Consignment\AbstractConsignment;
 use MyParcelNL\Sdk\src\Model\Consignment\BpostConsignment;
@@ -343,7 +343,7 @@ class ConsignmentFactory
         if (!\Validate::isLoadedObject($carrier)) {
             throw new Exception('No carrier found.');
         }
-        
+
         $carrierType = CarrierConfigurationProvider::get($id_carrier, 'carrierType');
 
         if ($carrier->id_reference == $this->configuration::get(Constant::POSTNL_CONFIGURATION_NAME)

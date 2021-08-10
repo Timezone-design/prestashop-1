@@ -7,7 +7,7 @@ use Gett\MyparcelBE\Logger\Logger;
 use Gett\MyparcelBE\Module\Carrier\Provider\CarrierSettingsProvider;
 use Gett\MyparcelBE\Module\Carrier\Provider\DeliveryOptionsProvider;
 use Gett\MyparcelBE\Module\Tools\Tools;
-use Gett\MyparcelBE\OrderLabel;
+use Gett\MyparcelBE\Entity\OrderLabel;
 use Gett\MyparcelBE\Provider\OrderLabelProvider;
 use Gett\MyparcelBE\Service\Consignment\Download;
 use Gett\MyparcelBE\Service\DeliverySettingsProvider;

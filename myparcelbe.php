@@ -1,5 +1,7 @@
 <?php
 
+use PrestaShopBundle\Exception\InvalidModuleException;
+
 if (!defined('_PS_VERSION_')) {
     exit;
 }
@@ -8,6 +10,12 @@ if (file_exists(__DIR__ . '/vendor/autoload.php')) {
     require_once __DIR__ . '/vendor/autoload.php';
 }
 
+use CarrierModuleCore as CarrierModule;
+use ConfigurationCore as Configuration;
+use DbQueryCore as DbQuery;
+use CarrierCore as Carrier;
+use ProductCore as Product;
+
 class MyParcelBE extends CarrierModule
 {
     use \Gett\MyparcelBE\Module\Hooks\DisplayAdminProductsExtra;
@@ -15,9 +23,11 @@ class MyParcelBE extends CarrierModule
     use \Gett\MyparcelBE\Module\Hooks\OrdersGridHooks;
     use \Gett\MyparcelBE\Module\Hooks\FrontHooks;
     use \Gett\MyparcelBE\Module\Hooks\LegacyOrderPageHooks;
-    use \Gett\MyparcelBE\Module\Hooks\OrderLabelHooks;
     use \Gett\MyparcelBE\Module\Hooks\CarrierHooks;
     use \Gett\MyparcelBE\Module\Hooks\OrderHooks;
+
+    public const MODULE_NAME = 'myparcelbe';
+
     public $baseUrl;
     public $id_carrier;
     public $migrations = [
@@ -100,7 +110,7 @@ class MyParcelBE extends CarrierModule
 
     public function __construct()
     {
-        $this->name = 'myparcelbe';
+        $this->name = self::MODULE_NAME;
         $this->tab = 'shipping_logistics';
         $this->version = '1.1.0';
         $this->author = 'Gett';
@@ -310,5 +320,23 @@ class MyParcelBE extends CarrierModule
             'include_tax' => $includeTax,
             'display_tax_label' => $displayTaxLabel,
         ];
+    }
+
+    /**
+     * @return self
+     * @throws \Exception
+     */
+    public static function getModule(): self
+    {
+        /**
+         * @var self|false $module
+         */
+        $module = ModuleCore::getInstanceByName(self::MODULE_NAME);
+
+        if (! $module) {
+            throw new InvalidModuleException('Failed to get module instance');
+        }
+
+        return $module;
     }
 }
