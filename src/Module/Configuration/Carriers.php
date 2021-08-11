@@ -39,7 +39,7 @@ class Carriers extends AbstractForm
             || Tools::isSubmit('submitAddMyparcelCarrierSettingsAndStay')) {
                 $this->createNewCarrier();
             
-            $this->context->cookie->__set('myparcelbe.message', $this->module->l('A new carrier has been added to myparcel'));
+            $this->cookie->{'myparcelbe.message'} = $this->module->l('A new carrier has been added to myparcel');
             $this->redirectToCarrierList();
         }
 
@@ -51,7 +51,7 @@ class Carriers extends AbstractForm
         return $this->getMessage().$this->getList();
     }
 
-    protected function redirectToCarrierList()
+    protected function redirectToCarrierList(): void
     {
         // Redirect back to list
         Tools::redirectAdmin((new Link())->getAdminLink('AdminModules', true, [], [
@@ -62,17 +62,21 @@ class Carriers extends AbstractForm
         ]));
     }
 
-    protected function getMessage()
+    protected function getMessage(): string
     {
-        $message = $this->context->cookie->__get('myparcelbe.message');
+        if (!isset($this->cookie)) {
+            return '';
+        }
+
+        $message = $this->cookie->{'myparcelbe.message'};
 
         if ($message) {
             $message = $this->module->displayConfirmation($message);
         }
 
-        $this->context->cookie->__unset('myparcelbe.message');
+        unset($this->cookie->{'myparcelbe.message'});
 
-        return $message;
+        return $message ?? '';
     }
 
     protected function getLegend(): string
