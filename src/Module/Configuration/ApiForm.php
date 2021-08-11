@@ -148,7 +148,7 @@ class ApiForm extends AbstractForm
     {
         $hash         = md5(uniqid((string) mt_rand(), true));
         $siteUrl      = Tools::getShopDomainSsl(true, true);
-        $webhookUrl   = $siteUrl . "/index.php?fc=module&module={$this->module->name}&controller=hook&hash=$hash&XDEBUG_SESSION_START=edie";
+        $webhookUrl   = $siteUrl . "/index.php?fc=module&module={$this->module->name}&controller=hook&hash=$hash";
         $subscription = new Subscription(Subscription::SHIPMENT_STATUS_CHANGE_HOOK_NAME, $webhookUrl);
 
         $service  = $this->initializeWebhookService();
