@@ -8,7 +8,6 @@ use Country;
 use Exception;
 use Gett\MyparcelBE\Carrier\PackageTypeCalculator;
 use Gett\MyparcelBE\Constant;
-use MyParcelNL\Sdk\src\Support\Arr;
 use OrderLabel;
 use Gett\MyparcelBE\Module\Carrier\Provider\CarrierSettingsProvider;
 use Gett\MyparcelBE\Service\CarrierConfigurationProvider;
@@ -16,6 +15,7 @@ use Gett\MyparcelBE\Service\Order\OrderTotalWeight;
 use Gett\MyparcelBE\Service\ProductConfigurationProvider;
 use Module;
 use MyParcelBE;
+use MyParcelNL\Sdk\src\Adapter\DeliveryOptions\AbstractDeliveryOptionsAdapter;
 use MyParcelNL\Sdk\src\Factory\ConsignmentFactory as ConsignmentSdkFactory;
 use MyParcelNL\Sdk\src\Factory\DeliveryOptionsAdapterFactory;
 use MyParcelNL\Sdk\src\Helper\MyParcelCollection;
@@ -24,6 +24,7 @@ use MyParcelNL\Sdk\src\Model\Consignment\BpostConsignment;
 use MyParcelNL\Sdk\src\Model\Consignment\DPDConsignment;
 use MyParcelNL\Sdk\src\Model\Consignment\PostNLConsignment;
 use MyParcelNL\Sdk\src\Model\MyParcelCustomsItem;
+use MyParcelNL\Sdk\src\Support\Arr;
 use Order;
 use Tools;
 use Validate;
@@ -41,7 +42,7 @@ class ConsignmentFactory
     private $carrierSettings;
 
     /**
-     * @var \MyParcelNL\Sdk\src\Adapter\DeliveryOptions\AbstractDeliveryOptionsAdapter
+     * @var AbstractDeliveryOptionsAdapter
      */
     private $deliveryOptions;
 
