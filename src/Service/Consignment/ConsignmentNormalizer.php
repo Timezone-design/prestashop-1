@@ -16,11 +16,17 @@ class ConsignmentNormalizer
      */
     private $data;
 
+    /**
+     * @param array|null $data
+     */
     public function __construct(?array $data)
     {
         $this->data = $data;
     }
 
+    /**
+     * @return array
+     */
     public function normalize(): array
     {
         $data                 = $this->data;
