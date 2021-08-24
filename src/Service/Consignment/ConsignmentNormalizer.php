@@ -16,12 +16,10 @@ class ConsignmentNormalizer
      */
     private $data;
 
-
     public function __construct(?array $data)
     {
         $this->data = $data;
     }
-
 
     public function normalize(): array
     {
